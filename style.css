@@ -1,0 +1,11 @@
+body, html {
+    margin: 0;
+    padding: 1em;
+    font-family: sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.detail { color:gray};
