@@ -19,7 +19,7 @@ To generate a polygon using the <a-entity> element with a custom A-Frame compone
 
 
 
-// Convert Lat-Long to
+// BROKEN: Convert Lat-Long to
 function convertGeoCoordsToCartesianAndCenter(coordsArrayLongLat) {
   const R = 6371000; // Earth's radius in meters
   const referenceLat = coordsArrayLongLat[0][1];
@@ -56,6 +56,68 @@ function convertGeoCoordsToCartesianAndCenter(coordsArrayLongLat) {
     centerPoint: centerPointLongLat
   };
 }
+
+
+
+function convertGeoCoordsAndFindCenterCorrected(coords) {
+  const R = 6371000; // Earth's radius in meters
+  let sumX = 0, sumY = 0, sumLon = 0, sumLat = 0;
+  let cartesianCoords = [];
+
+  // Calculate reference latitude and longitude as the average of all points
+  coords.forEach(coord => {
+    sumLon += coord[0];
+    sumLat += coord[1];
+  });
+  const referenceLon = sumLon / coords.length;
+  const referenceLat = sumLat / coords.length;
+
+  // Convert to Cartesian coordinates
+  coords.forEach(([lon, lat]) => {
+    let x = (lon - referenceLon) * Math.cos((lat + referenceLat) / 2 * Math.PI / 180);
+    let y = (lat - referenceLat);
+    x *= R * Math.PI / 180; // Adjust for Earth's radius and convert degrees to radians
+    y *= R * Math.PI / 180; // Adjust for Earth's radius and convert degrees to radians
+    cartesianCoords.push({x, y});
+  });
+
+  // Calculate center point in Cartesian coordinates
+  let centerX = 0, centerY = 0;
+  cartesianCoords.forEach(coord => {
+    centerX += coord.x;
+    centerY += coord.y;
+  });
+  centerX /= cartesianCoords.length;
+  centerY /= cartesianCoords.length;
+
+  // Adjust points relative to the center
+  cartesianCoords = cartesianCoords.map(coord => ({
+    x: coord.x - centerX,
+    y: coord.y - centerY
+  }));
+
+  // Calculate center point in geographic coordinates
+  const centerPoint = [referenceLon, referenceLat];
+
+  return {cartesianCoords, centerPoint};
+}
+
+// Example usage:
+const coordsLongLat = [
+  [10.148099218397029, 53.52241676074994],
+  [10.14806121618159, 53.522398181914966],
+  [10.14802116055648, 53.52238120397994],
+  [10.147979242236701, 53.52236590691296],
+  [10.147935657749702, 53.52235236253623],
+  [10.14791081595036, 53.522347031370764],
+  [10.147885426828418, 53.522342713140596],
+  [10.147859604068831, 53.52233942832787],
+];
+
+const { cartesianCoords, centerPoint } = convertGeoCoordsAndFindCenterCorrected(coordsLongLat);
+console.log("Cartesian Coordinates:", cartesianCoords);
+console.log("Center Point:", centerPoint);
+
     
 
 
@@ -150,4 +212,5 @@ function placePolygon(polygonPoints, centerPoint) {
 //Testing
 placePolygon(result.cartesianCoords,result.centerPoint);
 placePolygon(result.cartesianCoords, [10.049541015187984,53.56545329223668]);
+placePolygon(cartesianCoords,centerPoint);
 placePosMarker([10.049541015187984,53.56545329223668]);
