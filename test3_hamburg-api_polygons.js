@@ -92,7 +92,7 @@ window.onload = () => {
                 compoundEntity.appendChild(text);
                 document.querySelector("a-scene").appendChild(compoundEntity);
             });
-            
+            document.querySelector(".detail").innerHTML = "API call successful, AR features added!"
         }
         downloaded = true;
     });

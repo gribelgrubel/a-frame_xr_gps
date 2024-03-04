@@ -1,6 +1,6 @@
 body, html {
     margin: 0;
-    padding: 1em;
+    padding: 0;
     font-family: sans-serif;
     background:lightgray;
 }
@@ -20,6 +20,8 @@ a, button {
     display: flex;
     position: fixed;
     top:0;
+    padding:0.5em;
+    flex-wrap: wrap;
 }
 
 h2, .backlink {
