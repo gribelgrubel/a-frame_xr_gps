@@ -12,6 +12,10 @@ window.onload = () => {
                   south = e.detail.position.latitude - 0.05;
                   north = e.detail.position.latitude + 0.05;
             console.log(`${west} ${south} ${east} ${north}`);
+            console.log("current Position: ");
+            console.log(e.detail.position);
+            
+            /* 
             const response = await fetch(`https://hikar.org/webapp/map?bbox=${west},${south},${east},${north}&layers=poi&outProj=4326`);
             const pois = await response.json();
             console.log("Points of Interest in surroundings: ");
@@ -48,6 +52,7 @@ window.onload = () => {
                 compoundEntity.appendChild(text);
                 document.querySelector("a-scene").appendChild(compoundEntity);
             });
+            */
         }
         downloaded = true;
     });
