@@ -60,7 +60,7 @@ window.onload = () => {
                 }
                 */
 
-                polygonEntity.setAttribute("rotation", {x: 90, y:0, z:0});
+                polygonEntity.setAttribute("rotation", {x: -90, y:0, z:0});
 
                 console.log(polygonEntity);
 
@@ -90,8 +90,25 @@ window.onload = () => {
                 });
                 text.setAttribute("value", featureNutzung);
                 text.setAttribute("align", "center");
+
+                const text_strasse = document.createElement("a-text");
+                text_strasse.setAttribute("look-at", "[gps-new-camera]");
+                text_strasse.setAttribute("scale", {
+                    x: textScale/2,
+                    y: textScale/2,
+                    z: textScale/2
+                });
+                text_strasse.setAttribute("position", {
+                    x : 0,
+                    y : -1.5,
+                    z: 0
+                } );
+                text_strasse.setAttribute("value", feature.properties.strassenname);
+                text_strasse.setAttribute("align", "center");
+
                 compoundEntity.appendChild(box);
                 compoundEntity.appendChild(text);
+                compoundEntity.appendChild(text_strasse);
                 document.querySelector("a-scene").appendChild(compoundEntity);
             });
             document.querySelector(".detail").innerHTML = "API call successful, AR features added!"
