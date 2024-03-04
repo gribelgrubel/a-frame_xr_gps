@@ -4,7 +4,7 @@ window.onload = () => {
     let downloaded = false;
 
     let radius = 0.001;  // radius around current position to set bounding box size
-    let maxCount = 50;  // max feature count to call and track (performance reasons)
+    let maxCount = 100;  // max feature count to call and track (performance reasons)
 
     const el = document.querySelector("[gps-new-camera]");
 
@@ -21,7 +21,7 @@ window.onload = () => {
             // testing with straße feinkartierung
             // ask url = `https://api.hamburg.de/datasets/v1/feinkartierung_strasse/collections/strassenflaechen/items?bbox=${west},${south},${east},${north}`
             
-            const response = await fetch(`https://api.hamburg.de/datasets/v1/feinkartierung_strasse/collections/strassenflaechen/items?bbox=${west},${south},${east},${north}&limit=50`);
+            const response = await fetch(`https://api.hamburg.de/datasets/v1/feinkartierung_strasse/collections/strassenflaechen/items?bbox=${west},${south},${east},${north}&limit=${maxCount}`);
             const pois = await response.json();
             console.log("Straßenflächennutzung in surroundings: ");
             console.log(pois);
@@ -59,6 +59,8 @@ window.onload = () => {
                     console.log(error);
                 }
                 */
+
+                polygonEntity.setAttribute("rotation", {x: 90, y:0, z:0});
 
                 console.log(polygonEntity);
 
@@ -153,18 +155,21 @@ function convertGeoCoordsAndFindCenterCorrected(coords) {
 function mapCartesianToVertices(cartesianCoordsArray, zHeight) {
     
     //wrong axes
+    
     return cartesianCoordsArray.map(coord => ({
-      x: coord.x,
-      y: coord.y,  
-      z: zHeight // Use the provided z-height for all vertices
+      x: coord.x,   // right
+      y: coord.y,   // up
+      z: zHeight    // towards viewer (Use the provided z-height for all vertices)
     }));
     
-
-    /* return cartesianCoordsArray.map(coord => ({
-        x: coord.x,
-        y: zHeight, // Use the provided z-height for all vertices
-        z: coord.y  // swap axes for correct axes orientation
-      })); */
+    
+    /*
+    return cartesianCoordsArray.map(coord => ({
+        x: coord.x, // right
+        y: zHeight, // up (Use the provided z-height for all vertices)
+        z: coord.y  // towards viewer (swap axes for correct axes orientation)
+      }));
+      */
   }
   
   function placePosMarker(posLongLat) {
@@ -194,7 +199,7 @@ function mapCartesianToVertices(cartesianCoordsArray, zHeight) {
   
   function createPolygon(polygonPoints, centerPoint) {
     const polygonEntity = document.createElement("a-entity");
-    const vertices = mapCartesianToVertices(polygonPoints, -1);     // set z-Height to -1 for testing instead of 0
+    const vertices = mapCartesianToVertices(polygonPoints, -3);     // set z-Height to -1 for testing instead of 0
     console.log(vertices);
     //verticesJSON = JSON.stringify(vertices);
     //console.log(verticesJSON);
