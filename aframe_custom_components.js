@@ -103,14 +103,14 @@ AFRAME.registerComponent('custom-polygon-deprecated', {
           }
           // Assume it's already a JavaScript array if not a string
           console.log("received vertex data as array:");
-          console.log(value);
+          // console.log(value);
           return value;
         }
       }
     },
     init: function () {
       // Assume vertices are provided in a format suitable for creating a shape
-      console.log("creating new THREE.Shape")
+      // console.log("creating new THREE.Shape")
       const shape = new THREE.Shape();
       this.data.vertices.forEach((vertex, idx) => {
         // Move to the first vertex to start the shape
@@ -134,7 +134,8 @@ AFRAME.registerComponent('custom-polygon-deprecated', {
 
       // Set the mesh as the object of the entity
       this.el.setObject3D('mesh', mesh);
-      console.log("initialized shape");
+      // console.log("initialized shape:");
+      // console.log(this);
     },
     update: function (oldData) {
       // Remove the previous mesh if the data has changed
