@@ -1,5 +1,5 @@
 window.onload = () => {
-    console.log("loaded script hikar_test2_labels");
+    console.log("loaded script.");
 
     let downloaded = false;
 

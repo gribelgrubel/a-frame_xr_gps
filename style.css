@@ -2,10 +2,33 @@ body, html {
     margin: 0;
     padding: 1em;
     font-family: sans-serif;
+    background:lightgray;
 }
 
 * {
     box-sizing: border-box;
 }
 
-.detail { color:gray};
+a, button {
+    cursor: pointer;
+}
+
+.detail { color:gray}
+
+.headermenu {
+    width: 100%;
+    display: flex;
+    position: fixed;
+    top:0;
+}
+
+h2, .backlink {
+    margin: 1em auto;
+    display: inline-block;
+    background:rgba(255,255,255,0.6);
+    border-radius: 1em;
+    padding: 0.25em 0.5em;
+    font-size:1.5rem;
+    font-weight:bold;
+}
+
