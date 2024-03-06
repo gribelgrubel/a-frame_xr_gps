@@ -59,6 +59,10 @@ window.onload = () => {
                     console.log(error);
                 }
                 */
+                try { polygonEntity.setAttribute('material', { color: 'blue' } ); }
+                catch(error) {
+                    console.log(error);
+                }
 
                 polygonEntity.setAttribute("rotation", {x: -90, y:0, z:0});
 
