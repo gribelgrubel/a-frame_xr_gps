@@ -53,16 +53,18 @@ window.onload = () => {
                 const polygonEntity = createPolygon(featureVerticeCoords.cartesianCoords,[0,0]);    //dont take real centerPoint coords; origin gets applied to parent entity, not the child vertice data
                 console.log(polygonEntity);
 
-                /*
+                // Change color according to featureNutzung (returns hex string); BUT if no valid hex, polygon is invisible!!
                 try { polygonEntity.setAttribute('material', { color: setFeatureColor(featureNutzung) } ); }
                 catch(error) {
                     console.log(error);
                 }
-                */
+                
+               /*
                 try { polygonEntity.setAttribute('material', { color: 'blue' } ); }
                 catch(error) {
                     console.log(error);
                 }
+                */
 
                 polygonEntity.setAttribute("rotation", {x: -90, y:0, z:0});
 
@@ -255,19 +257,24 @@ function mapCartesianToVertices(cartesianCoordsArray, zHeight) {
   function setFeatureColor(featureType) {
     switch (featureType) {
         case "Grünfläche": 
-            return "green";
+            return "#00711d";
+            //return "green";
             break;
         case "Parkplatz":
-            return "lightblue";
+            return "#006771";
+            //return "lightblue";
             break;
         case "Gehweg":
-            return "darkgreen";
+            return "#345326";
+            //return "darkgreen";
             break;
         case "Fahrbahn":
-            return "yellow";
+            return "#d4c14e";
+            //return "yellow";
             break;
         default:
             return "red";
+            //return "red";
     }
   }
   
